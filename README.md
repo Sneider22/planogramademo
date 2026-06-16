@@ -1,6 +1,6 @@
-# Planogram Demo
+# Planogram Pro Builder
 
-Planogram Demo es un prototipo de aplicación web para la gestión operativa de espacios comerciales en retail. Su objetivo es ofrecer un flujo de trabajo técnico para la creación, catalogación y evaluación de góndolas a partir de información de inventario y parámetros de mobiliario.
+Planogram Pro Builder es un prototipo de aplicación web para la gestión operativa de espacios comerciales en retail. Su objetivo es ofrecer un flujo de trabajo técnico para la creación, catalogación y evaluación de góndolas a partir de información de inventario y parámetros de mobiliario.
 
 ## Propósito
 
@@ -27,7 +27,7 @@ El diseño prioriza una experiencia de prototipo funcional, apoyada en un modelo
 ### Componentes lógicos
 
 - `js/state.js` - Clase `AppState` que centraliza el estado de la aplicación, persistencia en `localStorage` y catálogo de productos.
-- `js/login.js` - Control de acceso de prototipo con credenciales fijas (`admin` / `admin123`).
+- `js/login.js` - Control de acceso de prototipo con credenciales fijas (`admin` / `planodemo`).
 - `js/stores.js` - Renderizado de la lista de tiendas, manejo de modales y navegación hacia el detalle de la tienda.
 - `js/store-details.js` - Flujo de góndolas, creación/edición/eliminación y reportes globales de tienda.
 - `js/editor.js` - Editor de góndolas con lógica de colocación, cálculo de espacio y exporte de reportes.
@@ -118,3 +118,4 @@ Este proyecto está enfocado en la parte front-end de un sistema de planogramas.
 - validación de conceptos de UX para retail;
 - simulación de catálogo y espacio de exhibición;
 - comportamiento técnico de armado de reportes.
+
