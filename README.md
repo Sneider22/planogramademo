@@ -1,123 +1,105 @@
-# Planogram Pro Builder
+# Planogram Pro Builder — Demo
 
-Planogram Pro Builder es un prototipo de aplicación web para la gestión operativa de espacios comerciales en retail. Su objetivo es ofrecer un flujo de trabajo técnico para la creación, catalogación y evaluación de góndolas a partir de información de inventario y parámetros de mobiliario.
+Prototipo web para la gestión operativa de espacios comerciales en retail: creación, catalogación y evaluación de góndolas a partir de información de inventario y parámetros de mobiliario. `Pasantías`
 
-Credenciales de prueba `admin / planodemo`
+> **Demo en vivo:** [planogramademo.vercel.app](https://planogramademo.vercel.app/login.html) — usuario `admin`, contraseña `planodemo`.
+>
+> Este repositorio contiene el prototipo front-end, sin backend. La versión completa con Next.js, SQL Server y autenticación real está en [**planogramsystem**](https://github.com/Sneider22/planogramsystem).
 
-## Propósito
+---
 
-La herramienta está diseñada para:
-- gestionar múltiples tiendas y sus configuraciones de góndolas;
-- asociar productos a espacios físicos de exhibición;
-- validar ocupación de espacio y mapa de colocación;
-- generar reportes descargables con datos de inventario y valor comercial.
+## Capturas
 
-El diseño prioriza una experiencia de prototipo funcional, apoyada en un modelo de persistencia local que facilita pruebas rápidas sin requerir backend.
+| Inicio de sesión | Mis Tiendas |
+| :---: | :---: |
+| <a href="docs/screenshots/01-login.png"><img src="docs/screenshots/01-login.png" width="400" alt="Pantalla de inicio de sesión con credenciales de la demo"></a> | <a href="docs/screenshots/02-stores.png"><img src="docs/screenshots/02-stores.png" width="400" alt="Listado de tiendas"></a> |
+| **Góndolas por pasillo** | **Editor de góndola** |
+| <a href="docs/screenshots/03-store-details.png"><img src="docs/screenshots/03-store-details.png" width="400" alt="Góndolas de una tienda agrupadas por pasillo"></a> | <a href="docs/screenshots/04-editor.png"><img src="docs/screenshots/04-editor.png" width="400" alt="Editor de góndola con catálogo maestro y valor de inventario"></a> |
+
+<sub>Datos de demostración. Haz clic en una captura para verla en tamaño completo.</sub>
+
+---
+
+## Funcionalidades
+
+*   **Gestión de Tiendas:** Creación, edición y eliminación de tiendas con ID automático o personalizado.
+*   **Gestión de Góndolas:** Mobiliario organizado por pasillo y categoría, con edición, duplicado y eliminación.
+*   **Editor de Góndolas:** Configuración de tipo de mobiliario, dimensiones, planchas y zócalo; colocación de productos con alineación automática (auto-pack) o ubicación libre, y deshacer/rehacer.
+*   **Catálogo Maestro:** 55 productos simulados en 10 categorías (farmacia, cuidado personal, nutrición, bebé, entre otras), con búsqueda por nombre o SKU.
+*   **Métricas en Tiempo Real:** Valor de inventario, unidades totales y SKUs únicos por góndola.
+*   **Reportes:** Exportación a PDF y Excel, por góndola y consolidados por tienda.
+
+---
+
+## Tecnologías
+
+*   **HTML5, CSS3 y JavaScript** sin frameworks ni proceso de compilación.
+*   **localStorage** como capa de persistencia en el navegador.
+*   **jsPDF** y **jsPDF-AutoTable** para la generación de reportes PDF.
+*   **SheetJS (xlsx)** para la exportación a Excel.
+*   **Vercel** para el despliegue de la demo.
+
+---
+
+## Ejecución Local
+
+El proyecto no requiere instalación. Basta con clonar el repositorio y abrir `index.html` en el navegador:
+
+```bash
+git clone https://github.com/Sneider22/planogramademo.git
+cd planogramademo
+```
+
+Si prefieres servirlo localmente, cualquier servidor estático funciona, por ejemplo:
+
+```bash
+npx serve .
+```
+
+---
 
 ## Estructura del Proyecto
 
-### Archivos principales
+```text
+/
+├── index.html            # Redirige a login.html
+├── login.html            # Acceso al prototipo
+├── stores.html           # Listado y gestión de tiendas
+├── store-details.html    # Góndolas de una tienda y reporte global
+├── editor.html           # Editor de góndolas y reportes detallados
+├── css/style.css         # Estilos globales e identidad visual
+├── docs/screenshots/     # Capturas usadas en este README
+└── js/
+    ├── state.js          # AppState: estado global, persistencia y catálogo de productos
+    ├── login.js          # Validación de credenciales de la demo
+    ├── stores.js         # Lógica de la vista de tiendas
+    ├── store-details.js  # Flujo de góndolas y reportes por tienda
+    ├── editor.js         # Colocación de productos, cálculo de espacio y exportes
+    ├── calculator.js     # Cálculo de unidades y validación de profundidad
+    └── ui.js             # Utilidades de interfaz y manejo de vistas
+```
 
-- `index.html` - Página de inicio que redirige a `login.html`.
-- `login.html` - Pantalla de autenticación de prototipo.
-- `stores.html` - Listado de tiendas registradas, creación, edición y eliminación de tiendas.
-- `store-details.html` - Panel de gestión de góndolas dentro de una tienda.
-- `editor.html` - Editor de góndolas con simulación de posicionamiento y generación de reportes.
-- `css/style.css` - Estilos globales y diseño de la interfaz.
-- `js/*.js` - Lógica de la aplicación.
+---
 
-### Componentes lógicos
+## Persistencia
 
-- `js/state.js` - Clase `AppState` que centraliza el estado de la aplicación, persistencia en `localStorage` y catálogo de productos.
-- `js/login.js` - Control de acceso de prototipo con credenciales fijas (`admin` / `planodemo`).
-- `js/stores.js` - Renderizado de la lista de tiendas, manejo de modales y navegación hacia el detalle de la tienda.
-- `js/store-details.js` - Flujo de góndolas, creación/edición/eliminación y reportes globales de tienda.
-- `js/editor.js` - Editor de góndolas con lógica de colocación, cálculo de espacio y exporte de reportes.
-- `js/ui.js` - Funciones auxiliares de interfaz, gestión de vistas y utilidades de interacción.
-- `js/calculator.js` - Cálculos de espacios, unidades y validación de profundidad.
+Toda la información se conserva en el `localStorage` del navegador, por lo que cada visitante trabaja con sus propios datos y estos no se comparten entre dispositivos.
 
-## Funcionamiento general
+| Clave | Contenido |
+| :--- | :--- |
+| `planogram_stores` | Tiendas y sus góndolas |
+| `planogram_next_store_auto_id` | Siguiente ID automático de tienda |
+| `planogram_store_id` / `planogram_gondola_id` | Tienda y góndola seleccionadas |
+| `planogram_logged_in` | Indicador de sesión iniciada |
 
-### Autenticación
+---
 
-El acceso se controla en el front-end mediante `localStorage` y un indicador `planogram_logged_in`. Cuando el usuario valida la credencial, se redirige a `stores.html`.
+## Alcance del Prototipo
 
-### Gestión de tiendas
+Este proyecto se enfoca en validar la experiencia de usuario y la lógica de negocio de un sistema de planogramas. No incluye servidor, autenticación real ni almacenamiento remoto; esas capacidades se implementan en la versión completa.
 
-Cada tienda se guarda en `localStorage` bajo `planogram_stores`. El objeto de tienda incluye:
+---
 
-- `id` - Identificador interno.
-- `name` - Nombre visible.
-- `createdAt` - Marca de tiempo.
-- `library` - Lista de góndolas asociadas.
+## 🔗 Proyectos Relacionados
 
-La aplicación permite:
-- crear tiendas con ID generados o personalizados;
-- editar metadatos de la tienda;
-- eliminar tiendas con limpieza de estado asociado.
-
-### Gestión de góndolas
-
-Una góndola es un objeto de configuración que contiene parámetros básicos de mobiliario y un listado de estantes.
-
-La lógica central del estado mantiene:
-- dimensiones del módulo (`width`, `height`, `depth`);
-- número de estantes y separación entre ellos;
-- estructura de cada estante con productos colocados.
-
-Las góndolas se organizan por pasillo y categoría dentro de la tienda para facilitar su localización.
-
-### Catálogo de productos
-
-El catálogo de productos está implementado como un array en `js/state.js`. Cada producto cuenta con:
-- `id` y `sku`
-- `name`
-- `width`, `height`, `depth`
-- `price`
-- `color`
-- `category`
-
-Este catálogo simula un universo de productos de retail, con énfasis en farmacia, cuidado personal, nutrición y bebidas.
-
-### Persistencia
-
-Toda la información de tiendas, góndolas y configuraciones se conserva en `localStorage`:
-
-- `planogram_stores`
-- `planogram_next_store_auto_id`
-- `planogram_store_id`
-- `planogram_gondola_id`
-- `planogram_trigger_report`
-
-Esto permite continuar el flujo dentro del navegador sin necesidad de base de datos.
-
-## Generación de reportes
-
-La solución integra las siguientes librerías externas para exportes:
-
-- `jsPDF` - generador PDF en cliente.
-- `jsPDF-AutoTable` - construcción de tablas dinámicas en PDF.
-- `xlsx` - soporte de exportación a Excel desde la interfaz.
-
-Los reportes incluyen métricas operativas como:
-- valor total de inventario por góndola;
-- cantidad de unidades disponibles;
-- SKU y descripción de producto;
-- capacidad ocupada vs. profundidad disponible.
-
-## Flujo de uso recomendado
-
-1. Iniciar sesión en `login.html` con las credenciales del prototipo.
-2. Crear una nueva tienda en `stores.html`.
-3. Acceder a `store-details.html` para agregar y administrar góndolas.
-4. En las góndolas, usar el editor para asignar productos y validar ocupación.
-5. Generar reportes globales o específicos para descargar como PDF o Excel.
-
-## Alcance del prototipo
-
-Este proyecto está enfocado en la parte front-end de un sistema de planogramas. No incluye servidor, autenticación real ni almacenamiento remoto. Su valor está en:
-
-- validación de conceptos de UX para retail;
-- simulación de catálogo y espacio de exhibición;
-- comportamiento técnico de armado de reportes.
-
+*   [**planogramsystem**](https://github.com/Sneider22/planogramsystem): versión completa de la plataforma con Next.js 14, Prisma, SQL Server 2022, autenticación JWT y despliegue con Docker.

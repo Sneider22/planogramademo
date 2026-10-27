@@ -34,6 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const usernameInput = document.getElementById('login-username');
     const passwordInput = document.getElementById('login-password');
 
+    // Rellenar con las credenciales de la demo pública
+    const btnDemoFill = document.getElementById('btn-demo-fill');
+    if (btnDemoFill) {
+        btnDemoFill.addEventListener('click', () => {
+            usernameInput.value = 'admin';
+            passwordInput.value = 'planodemo';
+            if (loginError) loginError.style.display = 'none';
+            btnLogin.focus();
+        });
+    }
+
     [usernameInput, passwordInput].forEach(input => {
         if (input) {
             input.addEventListener('keydown', (e) => {
